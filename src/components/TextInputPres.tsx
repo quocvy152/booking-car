@@ -4,6 +4,16 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../utils/color';
 
+type TextInputPresProps = {
+  fieldName: string;
+  iconName: string;
+  fieldSize: number;
+  placeholderText: string;
+  placeholderTextColor: string;
+  isCalendarField?: boolean;
+  actionField: () => void;
+};
+
 export default function TextInputPres({
   fieldName,
   iconName,
@@ -11,14 +21,8 @@ export default function TextInputPres({
   placeholderText,
   placeholderTextColor,
   actionField,
-}: {
-  fieldName: string;
-  iconName: string;
-  fieldSize: number;
-  placeholderText: string;
-  placeholderTextColor: string;
-  actionField: Function;
-}) {
+  isCalendarField,
+}: TextInputPresProps) {
   return (
     <View style={styles.container}>
       <View style={styles.wrapInfoField}>
@@ -29,19 +33,35 @@ export default function TextInputPres({
           {fieldName}
         </Text>
       </View>
+
       <View style={styles.wrapTextInputPres}>
         <TouchableOpacity activeOpacity={1} onPress={() => actionField()}>
-          <Text
-            style={[
-              styles.placeholderStyle,
-              {
-                color: placeholderTextColor
-                  ? placeholderTextColor
-                  : COLORS.gray_2,
-              },
-            ]}>
-            {placeholderText}
-          </Text>
+          {isCalendarField ? (
+            <Text
+              style={[
+                styles.placeholderStyle,
+                {
+                  color: placeholderTextColor
+                    ? placeholderTextColor
+                    : COLORS.gray_2,
+                  fontWeight: '600',
+                },
+              ]}>
+              {'21h00, 30/04' + '-' + '21h00, 01/05'}
+            </Text>
+          ) : (
+            <Text
+              style={[
+                styles.placeholderStyle,
+                {
+                  color: placeholderTextColor
+                    ? placeholderTextColor
+                    : COLORS.gray_2,
+                },
+              ]}>
+              {placeholderText}
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -49,12 +69,15 @@ export default function TextInputPres({
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.gray_1,
+    marginBottom: 15,
+  },
 
   wrapInfoField: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
   },
 
   fieldStyle: {},

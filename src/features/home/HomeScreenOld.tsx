@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState} from 'react';
+/* eslint-disable react/no-unstable-nested-components */
+import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -9,36 +10,29 @@ import {DIMENSION} from '../../utils/dimension';
 import {COLORS} from '../../utils/color';
 import SelfDrivingCar from '../../components/SelfDrivingCar';
 import DriverDrivingCar from '../../components/DriverDrivingCar';
-import {TYPE_DRIVE_CAR} from '../../constants/type_drive_car';
 
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
-  const [tabChoose, setTabChoose] = useState<string>();
-
   return (
     <View style={styles.container}>
       <View style={styles.wrapBgImgHeaderHome}>
         <Image source={IMAGE.bg_header_home} style={styles.bgImgHeaderHome} />
-
         <View style={styles.wrapInfo}>
           <View style={styles.wrapInfoCustomer}>
             <Image source={IMAGE.ic_user} style={styles.imageIconUser} />
             <View>
               <Text style={styles.nameCustomerStyle}>Phạm Quốc Vỹ</Text>
-
               <View style={styles.wrapInfoPoint}>
                 <Image source={IMAGE.ic_star} style={styles.imageIconStar} />
                 <Text style={styles.infoPointReward}>Điểm thưởng</Text>
               </View>
             </View>
           </View>
-
           <View style={styles.wrapBtnIcon}>
             <TouchableOpacity style={styles.btnHeart}>
               <Icon name="cards-heart-outline" size={26} color={COLORS.white} />
             </TouchableOpacity>
-
             <TouchableOpacity>
               <Icon name="gift-outline" size={26} color={COLORS.white} />
             </TouchableOpacity>
@@ -47,76 +41,59 @@ function HomeScreen() {
       </View>
 
       <View style={styles.wrapChooseTypeCar}>
-        <View style={styles.wrapTabsTypeCar}>
-          <TouchableOpacity
-            style={[
-              tabChoose === TYPE_DRIVE_CAR.SELF_DRIVING_CAR
-                ? styles.tabsTypeCarChoosed
-                : styles.tabsTypeCar,
-              styles.borderTopLeft,
-            ]}
-            onPress={() => {
-              setTabChoose(TYPE_DRIVE_CAR.SELF_DRIVING_CAR);
+        <Tab.Navigator
+          initialRouteName="SelfDrivingCar"
+          screenOptions={{
+            tabBarActiveTintColor: COLORS.white,
+            tabBarInactiveTintColor: COLORS.black,
+            tabBarStyle: styles.borderTopTab,
+            tabBarContentContainerStyle: styles.borderTopTab,
+          }}>
+          <Tab.Screen
+            name="SelfDrivingCar"
+            component={SelfDrivingCar}
+            options={{
+              tabBarIndicatorStyle: {
+                height: '100%',
+                borderTopLeftRadius: 20,
+                backgroundColor: COLORS.main_color,
+              },
+              tabBarLabel: ({focused, color}) => (
+                <View style={styles.wrapTabLabel}>
+                  <Icon name="account-tie-outline" size={26} color={color} />
+                  <Text
+                    style={
+                      focused ? styles.labelTopTapActive : styles.labelTopTap
+                    }>
+                    Xe tự lái
+                  </Text>
+                </View>
+              ),
             }}
-            activeOpacity={0.9}>
-            <View style={styles.wrapTabLabel}>
-              <Icon
-                name="account-tie-outline"
-                size={26}
-                color={
-                  tabChoose === TYPE_DRIVE_CAR.SELF_DRIVING_CAR
-                    ? COLORS.white
-                    : COLORS.black
-                }
-              />
-              <Text
-                style={
-                  tabChoose === TYPE_DRIVE_CAR.SELF_DRIVING_CAR
-                    ? styles.labelTopTapActive
-                    : styles.labelTopTap
-                }>
-                Xe tự lái
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              tabChoose === TYPE_DRIVE_CAR.DRIVER_DRIVING_CAR
-                ? styles.tabsTypeCarChoosed
-                : styles.tabsTypeCar,
-              styles.borderTopRight,
-            ]}
-            onPress={() => {
-              setTabChoose(TYPE_DRIVE_CAR.DRIVER_DRIVING_CAR);
+          />
+          <Tab.Screen
+            name="DriverDrivingCar"
+            component={DriverDrivingCar}
+            options={{
+              tabBarIndicatorStyle: {
+                height: '100%',
+                borderTopRightRadius: 20,
+                backgroundColor: COLORS.main_color,
+              },
+              tabBarLabel: ({focused, color}) => (
+                <View style={styles.wrapTabLabel}>
+                  <Icon name="car" size={26} color={color} />
+                  <Text
+                    style={
+                      focused ? styles.labelTopTapActive : styles.labelTopTap
+                    }>
+                    Xe có tài xế
+                  </Text>
+                </View>
+              ),
             }}
-            activeOpacity={0.9}>
-            <View style={styles.wrapTabLabel}>
-              <Icon
-                name="car"
-                size={26}
-                color={
-                  tabChoose === TYPE_DRIVE_CAR.DRIVER_DRIVING_CAR
-                    ? COLORS.white
-                    : COLORS.black
-                }
-              />
-              <Text
-                style={
-                  tabChoose === TYPE_DRIVE_CAR.DRIVER_DRIVING_CAR
-                    ? styles.labelTopTapActive
-                    : styles.labelTopTap
-                }>
-                Xe có tài xế
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        {tabChoose === TYPE_DRIVE_CAR.SELF_DRIVING_CAR ? (
-          <SelfDrivingCar />
-        ) : (
-          <DriverDrivingCar />
-        )}
+          />
+        </Tab.Navigator>
       </View>
     </View>
   );
@@ -192,7 +169,7 @@ const styles = StyleSheet.create({
 
   wrapChooseTypeCar: {
     position: 'absolute',
-    top: DIMENSION.screenHeight / 3 - 60,
+    top: DIMENSION.screenHeight / 3 - 70,
     height: 400,
     maxHeight: 400,
     width: DIMENSION.screenWidth - 30,
@@ -226,37 +203,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-
-  tabsTypeCar: {
-    backgroundColor: COLORS.bg_main_color,
-    width: '50%',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  tabsTypeCarChoosed: {
-    backgroundColor: COLORS.main_color,
-    width: '50%',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  wrapTabsTypeCar: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-
-  borderTopLeft: {
-    borderTopLeftRadius: 10,
-  },
-
-  borderTopRight: {
-    borderTopRightRadius: 10,
-  },
-
-  wrapContentSelfDrivingTabs: {},
 });
 
 export default HomeScreen;

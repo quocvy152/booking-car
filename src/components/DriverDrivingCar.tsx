@@ -1,11 +1,20 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import CheckBox from 'react-native-check-box';
+
 import {COLORS} from '../utils/color';
 
 export default function DriverDrivingCar({}) {
   return (
     <View style={styles.container}>
-      <Text>Hello Component DriverDrivingCar</Text>
+      <Text style={styles.titleDriverDrivingCar}>Lộ trình</Text>
+
+      <CheckBox
+        style={{flex: 1, padding: 10}}
+        onClick={() => console.log('Check box')}
+        isChecked={true}
+        leftText={'CheckBox'}
+      />
     </View>
   );
 }
@@ -23,5 +32,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+  },
+
+  titleDriverDrivingCar: {
+    fontSize: 15,
+    paddingLeft: 15,
+    paddingTop: 15,
+    fontWeight: '600',
   },
 });
