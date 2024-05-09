@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
@@ -14,7 +15,7 @@ import {TYPE_DRIVE_CAR} from '../../constants/type_drive_car';
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
-  const [tabChoose, setTabChoose] = useState<string>();
+  const [tabChoose, setTabChoose] = useState<string>(TYPE_DRIVE_CAR.SELF_DRIVING_CAR);
 
   return (
     <View style={styles.container}>

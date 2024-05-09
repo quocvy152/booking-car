@@ -8,10 +8,11 @@ type TextInputPresProps = {
   fieldName: string;
   iconName: string;
   fieldSize: number;
-  placeholderText: string;
-  placeholderTextColor: string;
+  placeholderText?: string;
+  placeholderTextColor?: string;
   isCalendarField?: boolean;
   actionField: () => void;
+  textInputPresStyle?: object;
 };
 
 export default function TextInputPres({
@@ -22,9 +23,10 @@ export default function TextInputPres({
   placeholderTextColor,
   actionField,
   isCalendarField,
+  textInputPresStyle,
 }: TextInputPresProps) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, textInputPresStyle]}>
       <View style={styles.wrapInfoField}>
         {iconName && (
           <Icon name={iconName} size={fieldSize} style={{marginRight: 5}} />
@@ -43,7 +45,7 @@ export default function TextInputPres({
                 {
                   color: placeholderTextColor
                     ? placeholderTextColor
-                    : COLORS.gray_2,
+                    : COLORS.black,
                   fontWeight: '600',
                 },
               ]}>
@@ -56,7 +58,7 @@ export default function TextInputPres({
                 {
                   color: placeholderTextColor
                     ? placeholderTextColor
-                    : COLORS.gray_2,
+                    : COLORS.gray_4,
                 },
               ]}>
               {placeholderText}
@@ -82,7 +84,9 @@ const styles = StyleSheet.create({
 
   fieldStyle: {},
 
-  placeholderStyle: {},
+  placeholderStyle: {
+    fontWeight: '600',
+  },
 
   wrapTextInputPres: {
     borderBottomWidth: 0.2,

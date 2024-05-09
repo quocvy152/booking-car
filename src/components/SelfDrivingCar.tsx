@@ -11,7 +11,7 @@ export default function SelfDrivingCar({}) {
       <TextInputPres
         fieldName="Địa điểm"
         iconName="map-marker-outline"
-        fieldSize={17}
+        fieldSize={15}
         placeholderText={'Nhập địa điểm'}
         actionField={() => console.log('SelfDrivingCar')}
         placeholderTextColor={COLORS.black}
@@ -20,7 +20,7 @@ export default function SelfDrivingCar({}) {
       <TextInputPres
         fieldName="Thời gian thuê"
         iconName="calendar"
-        fieldSize={17}
+        fieldSize={15}
         placeholderText={'Nhập địa điểm'}
         actionField={() => console.log('SelfDrivingCar')}
         placeholderTextColor={COLORS.black}
